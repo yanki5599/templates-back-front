@@ -25,7 +25,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "http://localhost", // change this to your frontend domain
+    origin: "http://localhost:5173", // change this to your frontend domain
     credentials: true, // Required for cookies
   })
 );
@@ -34,7 +34,7 @@ app.use(
 // export const io = initializeSocketServer(httpServer);
 
 // Routes
-app.use("/auth", authRouter);
+app.use("/", authRouter);
 app.use(authMiddleware);
 
 app.use("/users", usersRouter);

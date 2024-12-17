@@ -28,7 +28,7 @@ export const login = asyncHandler(async (req: Request, res: Response, next: Next
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     maxAge: 3600000,
-    sameSite: "none",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   });
 
   res.status(200).json(createResponse({ user }, "logged in successfully"));
