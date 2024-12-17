@@ -1,7 +1,7 @@
 import axios from "axios";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IAddUserDto, IUser, IUserCredentials, RequestStatus } from "../../../types/types";
-import { Root } from "react-dom/client";
+import { fetchGenericAction } from "../../../utils/utils";
 
 axios.defaults.withCredentials = true;
 
@@ -21,48 +21,32 @@ const initialState: AuthStateType = {
 
 // "===============[👇 ASYNC THUNK 👇]===============";
 
-function fetchGenericAction<T = {}>(
-  typePrefix: string,
-  endpoint: string,
-  altError: string,
-  method: any
-) {
-  return createAsyncThunk(typePrefix, async (body: T, { rejectWithValue }) => {
-    try {
-      const response = await method(`${BASE_URL}/${endpoint}`, body);
-      return response.data.data;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || error.message || altError);
-    }
-  });
-}
-
 export const fetchRegister = fetchGenericAction<IAddUserDto>(
   "auth/register",
-  "register",
-  "failed to register",
-  axios.post
+  `${BASE_URL}/register`,
+  axios.post,
+  "failed to register"
 );
 
 export const fetchLogin = fetchGenericAction<IUserCredentials>(
   "auth/login",
-  "login",
-  "failed to login",
-  axios.post
+  `${BASE_URL}/login`,
+  axios.post,
+  "failed to login"
 );
 
 export const fetchValidateToken = fetchGenericAction(
   "auth/validateToken",
-  "validate",
-  "failed to validate",
-  axios.get
+  `${BASE_URL}/validate`,
+  axios.get,
+  "failed to validate"
 );
 
 export const fetchLogout = fetchGenericAction(
   "auth/logout",
-  "logout",
-  "failed to logout",
-  axios.post
+  `${BASE_URL}/logout`,
+  axios.post,
+  "failed to logout"
 );
 
 //===============[👇 handleAsyncThunk 👇]===============

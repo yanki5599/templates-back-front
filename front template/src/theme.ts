@@ -34,9 +34,9 @@ const themeOptions: ThemeOptions = {
       main: "#9c27b0",
     },
     custom: {
-      light: "#f3e5f5",
-      main: "#ce93d8",
-      dark: "#ab47bc",
+      light: "#3887BE",
+      main: "#38419D",
+      dark: "#200E3A",
     },
   },
   typography: {
