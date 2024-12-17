@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
-import "./HomePage.css";
 import { AppDispatch, RootState } from "../../store/store";
 import { fetchLogin, fetchRegister, fetchValidateToken } from "../../store/features/auth/authSlice";
 import RegisterForm from "../../components/RegisterForm/RegisterForm";
 import LoginForm from "../../components/LoginForm/LoginForm";
 import { IAddUserDto, IUserCredentials } from "../../types/types";
+import "./HomePage.css";
 
 interface HomePageProps {}
 

@@ -1,45 +1,43 @@
-import React, { useState, FormEvent } from "react";
+import React from "react";
 import { TextField, Button, Box } from "@mui/material";
 import { IUserCredentials } from "../../types/types";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import { useForm } from "../../hooks/useForm";
 
 interface LoginFormProps {
   onLogin: (userCredentials: IUserCredentials) => void;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
-  const { error } = useSelector((state: RootState) => state.auth);
-
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    // Call your login function here
-    onLogin({ email, password });
-  };
+  const { values, handleChange, handleSubmit, resetForm } = useForm<IUserCredentials>({
+    email: "",
+    password: "",
+  });
 
   return (
     <Box
       component="form"
-      onSubmit={handleSubmit}
+      onSubmit={(e) => {
+        handleSubmit(onLogin)(e);
+        resetForm();
+      }}
       sx={{ display: "flex", flexDirection: "column", gap: 2 }}
     >
       <TextField
         label="Email"
         variant="outlined"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        value={values.email}
+        onChange={handleChange}
         required
+        name="email"
       />
       <TextField
         label="Password"
         type="password"
         variant="outlined"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        value={values.password}
+        onChange={handleChange}
         required
+        name="password"
       />
       <Button variant="contained" type="submit">
         Log In
